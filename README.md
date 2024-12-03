@@ -81,7 +81,7 @@
     5
 ```
 
-- dictionnaries : Dictionaries are used to store key-value pairs. They have associated methods to manipulate the data stored in them.
+- **dictionnaries** : Dictionaries are used to store key-value pairs. They have associated methods to manipulate the data stored in them.
 
 ```python
     # Create a dictionary
