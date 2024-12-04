@@ -81,7 +81,7 @@
     5
 ```
 
-- **dictionnaries** : Dictionaries are used to store key-value pairs. They have associated methods to manipulate the data stored in them.
+- **dictionnaries** : (Dictionaries)[https://www.geeksforgeeks.org/python-dictionary/] are used to store key-value pairs. They have associated methods to manipulate the data stored in them.
 
 ```python
     # Create a dictionary
@@ -445,4 +445,80 @@ Here, the soup object is an instance of the BeautifulSoup class. It represents t
     h1_text = h1_tag.text
 
     print(h1_text)
+```
+
+If we want to access the content of an index.html file for example, we could do it that way:
+    
+```python
+    with open('index.html') as file:
+        soup = BeautifulSoup(file, 'html.parser')
+```
+
+## Loading data with integrated functions
+
+- **Reading and writing files** : We can use the `open()` function to open a file. It takes two arguments: the name of the file and the mode in which we want to open the file. The mode can be `'r'` (default mode) for reading, `'w'` for writing, or `'a'` for appending. ("r+" mode allows us to read and write to the file)
+
+```python
+    # Open a file in read mode
+    with open('data.txt', 'r') as file:
+        data = file.read()
+        print(data)
+```
+
+```python
+    # Open a file in write mode
+    with open('data.txt', 'w') as file:
+        file.write('Hello, world!')
+```
+
+The ```with``` statement is used to open the file and automatically close it when we're done with it. It's a good practice to use the `with` statement when working with files because it ensures that the file is properly closed after the block of code is executed.
+
+The CSV package is used to read and write CSV files. It provides a `reader` object to read data from a CSV file and a `writer` object to write data to a CSV file.
+
+The ```reader()``` method parses the data in the CSV file and returns it as a list of lists. Each inner list represents a row in the CSV file. 
+
+```python
+    import csv
+
+    # Open a CSV file in read mode
+    with open('data.csv', 'r') as file:
+        # Create a reader object
+        reader = csv.reader(file)
+
+        # Iterate over the rows in the CSV file
+        for row in reader:
+            print(row)
+```
+
+Outputs this :
+
+```python
+    ['nom', 'metier', 'couleur_preferee']
+    ['Jacob Smith', 'Ingénieur en informatique', 'Violet']
+    ['Nora Scheffer', 'Stratégiste numérique', 'Bleu']
+    ['Emily Adams', 'Responsable Marketing', 'Orange']
+```
+
+But this doesn't recognize the headers of the CSV file. So the DictReader() method is useful to read the data in the CSV file and return it as a list of dictionaries. Each dictionary represents a row in the CSV file, with the keys being the column headers.
+
+```python
+    import csv
+
+    with open('couleurs_preferees.csv') as fichier_csv:
+        reader = csv.DictReader(fichier_csv, delimiter=',')
+        for ligne in reader:
+            print(ligne['nom'] + " travaille en tant que " + ligne['metier'] + " et sa couleur préférée est " + ligne['couleur_preferee'])
+```
+
+The ```.writer() and writerow() methods``` are used to write data to a CSV file. The writerow() method writes a single row to the CSV file.
+
+```python
+    # Open a CSV file in write mode
+    with open('data.csv', 'w') as file:
+        # Create a writer object
+        writer = csv.writer(file)
+
+        # Write data to the CSV file
+        writer.writerow(['Alice', 25, 'New York'])
+        writer.writerow(['Bob', 30, 'Los Angeles'])
 ```
