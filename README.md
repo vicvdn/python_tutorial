@@ -277,3 +277,172 @@ We use a `for` loop when we know the number of iterations in advance, and a `whi
         print(item)
 ```
 
+## Functions definition
+
+- **Function definition** : A function is a block of code that performs a specific task. It can take parameters as input and return a value as output.
+
+```python
+    # Define a function
+    def greet(name):
+        print(f'Hello, {name}!')
+
+    # Call the function
+    greet('Alice')
+```
+A function can also have a return value : 
+- you don't have to specify the type of the return value, which is different than in C, C++
+- you can also return multiple values from a function by separating them with a comma (the return values will automatically be packed into a tuple)
+
+```python
+    # Define a function
+    def add(a, b):
+        return a + b
+
+    # Call the function
+    result = add(3, 5)
+    print(result)
+```
+
+## clean code practices
+
+- **DRY principle**, which stands for "Don't Repeat Yourself". It means that we should avoid duplicating code as much as possible by creating functions.
+
+- **Comments & docstrings** to explain the code
+
+- **The help() function** can be used to get information about a function or module. It displays the docstring of the function or module, if available. It's like the man command in Unix.
+
+- **Exceptions** : We can use the `try` and `except` statements to handle exceptions in Python. The `try` block contains the code that might raise an exception, and the `except` block contains the code that handles the exception.
+
+```python
+    # Define a variable
+    x = 0
+
+    # Try to divide by zero
+    try:
+        result = 5 / x
+        print(result)
+    except ZeroDivisionError:
+        print('Cannot divide by zero')
+```
+
+- (The PEP 8 style guide for Python code)[https://peps.python.org/pep-0008/]
+
+## Modules and packages
+
+- **Modules** : A module is a file containing Python code. It can define functions, classes, and variables. We can import a module using the `import` statement. You generally place it at the top of your python file.
+
+```python
+    # Import the math module
+    import math
+
+    # Use the sqrt function from the math module
+    result = math.sqrt(16)
+    print(result)
+```
+You can also import a specific function from a module you specify :
+    
+```python
+    # Import the sqrt function from the math module
+    from math import sqrt
+
+    # Use the sqrt function
+    result = sqrt(16)
+    print(result)
+```
+
+You can create packages by grouping related modules together in a directory. A package is a directory that contains an `__init__.py` file. This file can be empty, or it can contain initialization code for the package.
+
+To use a module from a package you have to specify the name of the package in the import, and it has to be separated by a dot from the name of the module.
+
+```python
+    # Import the greet function from the mypackage module
+    import mypackage.mymodule
+
+    result = mypackage.mymodule.myfunction()
+```
+
+```python
+    # we can also import the function directly
+    from mypackage.mymodule import myfunction
+
+    # Call the function directly
+    result = myfunction()
+```
+
+Among the most used packages in Python, we have :
+- **Requests** : to send HTTP requests (frequently used to interact with REST APIs)
+- **BeautifulSoup** : to parse HTML and XML documents
+- **Pandas** : to work with data in tabular form
+
+You can install the packages using the `pip` command. For example, to install the `requests` package, you can run the following command :
+
+```bash
+    pip install requests
+```
+
+**To summarize:**
+- A module is a file containing Python code.
+- A package is a directory containing modules linked by an `__init__.py` file.
+- You can import a module using the `import` statement.
+- You can import a specific function from a module using the `from` statement.
+- You can install packages using the `pip` command.
+
+## Extract and manipulate data with web scraping
+
+- **ETL : Extract, Transform, Load** is a process used to extract data from a source, transform it into a format that meets the requirements of the target system, and load it into the target system.
+
+HTML is made up of many tags, and each time there is an opening tag, there is a closing tag. The tags are used to structure the content of the page. The tags are enclosed in angle brackets, and they can have attributes.
+
+```html
+    <h1>This is a heading</h1>
+    <p>This is a paragraph</p>
+    <a href="https://www.example.com">This is a link</a>
+```
+
+The Request package we saw earlier comes in handy when we want to extract data from a website. We can use it to send HTTP requests to the website and get the HTML content of the page.
+
+```python
+    import requests
+
+    # Send a GET request to the website
+    response = requests.get('https://www.example.com')
+
+    # Get the HTML content of the page
+    html_content = response.text
+
+    print(html_content)
+```
+But then we need to parse the content we just got. Good thing is, we have the BeautifulSoup package to help us with that. It allows us to parse HTML and XML documents.
+
+First, we install it with the following command :
+
+```bash
+    pip install beautifulsoup4
+```
+
+Then we can use it like this :
+
+```python
+    import requests 
+    from bs4 import BeautifulSoup
+
+    url = 'https://www.example.com'
+    # Send a GET request to the website
+    response = requests.get(url)
+    # Get the HTML content of the page
+    page = response.content
+    # Parse the HTML content
+    soup = BeautifulSoup(html_content, 'html.parser')
+```
+
+Here, the soup object is an instance of the BeautifulSoup class. It represents the parsed HTML content of the page. We can use it to extract data from the page.
+
+```python
+    # Find the first h1 tag on the page
+    h1_tag = soup.find('h1')
+
+    # Get the text inside the h1 tag
+    h1_text = h1_tag.text
+
+    print(h1_text)
+```
