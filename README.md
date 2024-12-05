@@ -522,3 +522,57 @@ The ```.writer() and writerow() methods``` are used to write data to a CSV file.
         writer.writerow(['Alice', 25, 'New York'])
         writer.writerow(['Bob', 30, 'Los Angeles'])
 ```
+
+**Takeaways :**
+
+- The following lines are commonly used in Python scripts to **control how the code is executed**. Here's a breakdown of what they do:
+
+```python
+    if __name__ == "__main__":
+        main()
+```
+The first line checks whether the script is being run as the main program or if it is being imported as a module in another script.
+```__name__``` is a special built-in variable in Python. When a Python script is run directly (not imported as a module), the value of ```__name__``` is set to "```__main__```".
+If the script is being run directly, this condition evaluates to True, and the code inside the if block is executed.
+If the script is imported as a module in another script, the value of ```__name__``` will be set to the name of the script (e.g., ```"my_script"```), and the code inside the if block is skipped.
+
+This construct allows you to write code that can be reused as a module (when imported) but also run standalone (when executed directly).
+
+- The following lines **show how DictWriter() can be used** to write data to a CSV file. After creating the instance of the DictWriter() class named "writer", we write the header row using the writeheader() method. Then, we write each row of data using the writerow() method.
+
+
+```python
+    def load(data_to_load, filename="output.csv"):
+        with open(filename, mode="w") as file:
+            fieldnames = ["nom", "salaire"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for data in data_to_load:
+                writer.writerow(data)
+```
+
+- When you want to make an extraction, you can specify a user-agent in the headers of the request. This is useful when the website you are scraping blocks requests from bots. You can set the user-agent to a browser's user-agent to make the request look like it's coming from a browser.
+
+```python
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+    response = requests.get(url, headers=headers)
+```
+
+You can also use a personalized user-agent to make the request look like it's coming from a specific ethical user.
+
+```python
+    import requests
+
+    # Définir l'agent utilisateur
+    headers = {
+        'User-Agent': 'MonApplication/1.0 (contact@monemail.com) - Extraction éthique des données'
+    }
+
+    # Effectuer une requête GET avec l'en-tête personnalisé
+    response = requests.get('https://www.example.com', headers=headers)
+
+    # Afficher le contenu de la réponse
+    print(response.text)
+```
